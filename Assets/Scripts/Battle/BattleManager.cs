@@ -61,6 +61,8 @@ public class BattleManager : MonoBehaviour {
         battlesFought = 0;
         hasLost = false;
         hasWon = false;
+
+        isFightingFinalBoss = false;
     }
 
     // Update is called once per frame
@@ -129,12 +131,14 @@ public class BattleManager : MonoBehaviour {
     public void StartBattle(string[] introMessage = null, 
         EnemyPartyManager enemyEncounter = null)
     {
+        hasLost = false;
+        hasWon = false;
         Sounds.audioSource.clip = Sounds.encounter;
         Sounds.audioSource.Play();
 
         Songs.bgmmusicPlayer.Pause();
-        Songs.battlemusicPlayer.clip = Songs.battleMusic;
-        Songs.battlemusicPlayer.Play();
+        Songs.songPlayer.PlayIntroThenLoop(Songs.battlemusicPlayer, 
+            Songs.battleIntro, Songs.battleMusic);
 
         // Disable player movement
         GameManager.gm.leader.DisableMovement();
